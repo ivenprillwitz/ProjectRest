@@ -1,9 +1,9 @@
 using System;
 using System.Net.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using ProjectRest.Models;
 using ProjectRest.Helper;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace ProjectRest 
 {
@@ -36,7 +36,7 @@ namespace ProjectRest
                 // get single user from 'database'
                 var tempAuthor = _dataholder.GetAuthor(id);
 
-                // check on null
+                // check on null refrence
                 if (tempAuthor == null) { 
                     return  NotFound();
                 }

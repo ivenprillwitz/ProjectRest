@@ -8,6 +8,8 @@ namespace ProjectRest.Models {
         public int Age {get; set;}
         public string Genre {get; set;}
 
+        // empty constructor for serialization
+        public AuthorDto() {}
         public AuthorDto(Author author) {
             this.Id = author.Id;
             this.Name = author.Prename + " " + author.Lastname;

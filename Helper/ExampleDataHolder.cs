@@ -38,5 +38,15 @@ namespace ProjectRest.Helper {
         public Author GetAuthor(int id) {
             return _authorList.FirstOrDefault(author => author.Id == id);
         }
+
+        public Book GetBookFromAuthor(int authorId, int bookId) {
+            var author = _authorList.FirstOrDefault(x => x.Id == authorId);
+
+            if (author == null)
+                return null;
+
+            var book = author.Books.FirstOrDefault(x => x.Id == bookId);
+            return book;
+        }
     }
 }

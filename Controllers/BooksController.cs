@@ -36,5 +36,19 @@ namespace ProjectRest {
 
             return Ok(tempBookDtoList);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetBookFromAuthor(int authorId, int id) {
+            
+            var author = _dataholder.GetAuthor(authorId);
+            if (author == null)
+                return NotFound();
+
+            var bookFromAuthor = _dataholder.GetBookFromAuthor(authorId, id);
+            if (bookFromAuthor == null)
+                return NotFound();
+
+            return Ok(new BookDto(bookFromAuthor));
+        }
     }
 }

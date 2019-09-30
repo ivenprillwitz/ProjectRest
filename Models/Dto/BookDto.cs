@@ -5,6 +5,9 @@ namespace ProjectRest.Models {
         public string Description {get; set;}
         public int AuthorId {get; set;}
 
+        // empty constructor for serialization
+        public BookDto() {}
+
         public BookDto (Book book) {
             this.Id = book.Id;
             this.Title = book.Title;

@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Web;
+using ProjectRest.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProjectRest
 {
@@ -33,6 +35,15 @@ namespace ProjectRest
                 setupAction.ReturnHttpNotAcceptable = true;
                 setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
             });
+
+            // register the DbContext on the container, getting the connection string from
+            // appSettings (note: use this during development; in a production environment,
+            // it's better to store the connection string in an environment variable)
+            var connectionString = Configuration["connectionStrings:databaseConnectionString"];
+            services.AddDbContext<DatabaseContext>(o => o.UseSqlServer(connectionString));
+
+            // register the repository
+            services.AddScoped<IDatabaseRepository, DatabaseRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,11 +65,10 @@ namespace ProjectRest
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

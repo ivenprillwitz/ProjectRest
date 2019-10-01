@@ -1,48 +1,47 @@
 using System;
 using System.Net.Http;
 using ProjectRest.Models;
-using ProjectRest.Helper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using ProjectRest.Services;
+using System.Linq;
 
 namespace ProjectRest 
 {
         [Route("api/authors")]
         public class AuthorController : Controller {
 
-            private ExampleDataHolder _dataholder;
+            private  IDatabaseRepository _databaserepository;
 
-            public AuthorController () {
-                _dataholder = new ExampleDataHolder();
+            public AuthorController (IDatabaseRepository databaserepository) {
+                _databaserepository = databaserepository;
             }
 
             [HttpGet()]
             public IActionResult GetAuthors() {
 
-                var tempList = new List<AuthorDto>();
-
-                // get authors from 'database' ;-)
-                var authors = _dataholder.GetAuthors();
-
+                var authors = _databaserepository.GetAuthors().ToList();
+                var authorDtoList = new List<AuthorDto>();
                 // create dto's and add to list
-                authors.ForEach( x => tempList.Add(new AuthorDto(x)));
+                authors.ForEach( author => authorDtoList.Add(new AuthorDto(author)));
 
-                return Ok(tempList);
+                return Ok(authorDtoList);
             }
 
             [HttpGet("{id}")]
             public IActionResult GetAuthor(int id) {
 
                 // get single user from 'database'
-                var tempAuthor = _dataholder.GetAuthor(id);
+                //var tempAuthor = _dataholder.GetAuthor(id);
 
                 // check on null refrence
-                if (tempAuthor == null) { 
-                    return  NotFound();
-                }
+                //if (tempAuthor == null) { 
+                //    return  NotFound();
+                //}
                 
-                var authorDto = new AuthorDto(tempAuthor);
-                return Ok(authorDto);
+                //var authorDto = new AuthorDto(tempAuthor);
+                //return Ok(authorDto);
+                return Ok();
             }
         }
 }

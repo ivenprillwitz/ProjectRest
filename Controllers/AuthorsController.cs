@@ -11,16 +11,16 @@ namespace ProjectRest
         [Route("api/authors")]
         public class AuthorController : Controller {
 
-            private  IDatabaseRepository _databaserepository;
+            private  IDirectoryService _service;
 
-            public AuthorController (IDatabaseRepository databaserepository) {
-                _databaserepository = databaserepository;
+            public AuthorController (IDirectoryService service) {
+                _service = service;
             }
 
             [HttpGet()]
             public IActionResult GetAuthors() {
 
-                var authors = _databaserepository.GetAuthors().ToList();
+                var authors = _service.GetAuthors().ToList();
                 var authorDtoList = new List<AuthorDto>();
                 // create dto's and add to list
                 authors.ForEach( author => authorDtoList.Add(new AuthorDto(author)));

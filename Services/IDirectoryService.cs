@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ProjectRest.Services
 {
-    public interface IDatabaseRepository
+    public interface IDirectoryService
     {
         IEnumerable<Author> GetAuthors();
         Author GetAuthor(Guid authorId);

@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace ProjectRest.Services
 {
-    public class DatabaseRepository : IDatabaseRepository
+    public class DirectoryService : IDirectoryService
     {
         private DatabaseContext _context;
 
-        public DatabaseRepository(DatabaseContext context)
+        public DirectoryService(DatabaseContext context)
         {
             _context = context;
         }

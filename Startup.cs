@@ -43,7 +43,7 @@ namespace ProjectRest
             services.AddDbContext<DatabaseContext>(o => o.UseSqlServer(connectionString));
 
             // register the repository
-            services.AddScoped<IDatabaseRepository, DatabaseRepository>();
+            services.AddScoped<IDirectoryService, DirectoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,40 +8,36 @@ using System.Linq;
 
 namespace ProjectRest 
 {
-        [Route("api/authors")]
-        public class AuthorController : Controller {
+    [Route("api/authors")]
+    public class AuthorController : Controller {
 
-            private  IDirectoryService _service;
+        private  IDirectoryService _service;
 
-            public AuthorController (IDirectoryService service) {
-                _service = service;
-            }
-
-            [HttpGet()]
-            public IActionResult GetAuthors() {
-
-                var authors = _service.GetAuthors().ToList();
-                var authorDtoList = new List<AuthorDto>();
-                // create dto's and add to list
-                authors.ForEach( author => authorDtoList.Add(new AuthorDto(author)));
-
-                return Ok(authorDtoList);
-            }
-
-            [HttpGet("{id}")]
-            public IActionResult GetAuthor(int id) {
-
-                // get single user from 'database'
-                //var tempAuthor = _dataholder.GetAuthor(id);
-
-                // check on null refrence
-                //if (tempAuthor == null) { 
-                //    return  NotFound();
-                //}
-                
-                //var authorDto = new AuthorDto(tempAuthor);
-                //return Ok(authorDto);
-                return Ok();
-            }
+        public AuthorController (IDirectoryService service) {
+            _service = service;
         }
+
+        [HttpGet()]
+        public IActionResult GetAuthors() {
+
+            var authorDtoList = new List<AuthorDto>();
+
+            var authors = _service.GetAuthors().ToList();
+            authors.ForEach( author => authorDtoList.Add(new AuthorDto(author)));
+
+            return Ok(authorDtoList);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetAuthor(Guid id) {
+
+            var author = _service.GetAuthor(id);
+
+            if(author is null)
+                return NotFound();
+                
+            var authorDto = new AuthorDto(author);
+            return Ok(authorDto);
+        }
+    }
 }

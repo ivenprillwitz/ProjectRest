@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Web;
 using ProjectRest.Services;
+using ProjectRest.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ProjectRest
@@ -40,7 +41,7 @@ namespace ProjectRest
             // appSettings (note: use this during development; in a production environment,
             // it's better to store the connection string in an environment variable)
             var connectionString = Configuration["connectionStrings:databaseConnectionString"];
-            services.AddDbContext<DatabaseContext>(o => o.UseSqlServer(connectionString));
+            services.AddDbContext<ProjectRestContext>(o => o.UseSqlServer(connectionString));
 
             // register the repository
             services.AddScoped<IDirectoryService, DirectoryService>();

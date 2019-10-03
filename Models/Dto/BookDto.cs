@@ -13,8 +13,8 @@ namespace ProjectRest.Models {
         public BookDto (Book book) {
             this.Id = book.Id;
             this.Title = book.Title;
-            this.Description = Description;
-            this.AuthorId = book.Author.Id;
+            this.Description = book.Description;
+            this.AuthorId = book.AuthorId;
         }
     }
 }
